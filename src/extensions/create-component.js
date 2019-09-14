@@ -31,6 +31,12 @@ module.exports = toolbox => {
       props: { name }
     })
 
+    await template.generate({
+      template: `${type}/test.js.ejs`,
+      target: `src/${folder}/${name}/test.js`,
+      props: { name }
+    })
+
     print.success(`A tela ${name} foi criada`)
   }
 
