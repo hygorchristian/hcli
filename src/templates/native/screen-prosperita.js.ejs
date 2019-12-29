@@ -1,0 +1,23 @@
+import React from 'react';
+import Header from '~/components/Header';
+
+import { Container, Botao } from './styles';
+
+function <%= props.filename%>({ navigation: { navigate } }) {
+  const continuar = () => {
+    navigate('');
+  };
+
+  return (
+    <>
+      <Header />
+      <Container>
+        <Botao onPress={continuar} right>
+          Continuar
+        </Botao>
+      </Container>
+    </>
+  );
+}
+
+export default <%= props.filename%>;

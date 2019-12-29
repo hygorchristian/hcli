@@ -6,18 +6,21 @@ module.exports = toolbox => {
     return !!package.dependencies['react-native'];
   }
 
-  async function createComponent(folder, name){
+  async function createComponent(folder, name, duck, saga){
     if(!name){
       print.error('O nome deve ser informado.')
       return
     }
 
-    const type = isReactNative() ? 'native' : 'web';
+    const arr = name.split('/')
+    const filename = arr[arr.length - 1]
+
+    const type = await isReactNative() ? 'native' : 'web';
 
     await template.generate({
       template: `${type}/screen.js.ejs` ,
-      target: `src/${folder}/${name}/${name}.js`,
-      props: { name }
+      target: `src/${folder}/${name}/${filename}.js`,
+      props: { filename }
     })
 
     await template.generate({
@@ -28,16 +31,10 @@ module.exports = toolbox => {
     await template.generate({
       template: `${type}/screen-index.js.ejs`,
       target: `src/${folder}/${name}/index.js`,
-      props: { name }
+      props: { filename }
     })
 
-    await template.generate({
-      template: `${type}/test.js.ejs`,
-      target: `src/${folder}/${name}/test.js`,
-      props: { name }
-    })
-
-    print.success(`A tela ${name} foi criada`)
+    print.success(`A tela ${filename} foi criada`)
   }
 
   toolbox.createComponent = createComponent

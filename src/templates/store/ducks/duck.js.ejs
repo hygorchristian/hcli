@@ -1,0 +1,43 @@
+import { createReducer, createActions } from 'reduxsauce';
+import Immutable from 'seamless-immutable';
+
+//Types
+
+const Types = {
+  <%= props.NAME%>_REQUEST: '<%= props.NAME%>_REQUEST_<%= props.random%>',
+  <%= props.NAME%>_SUCCESS: '<%= props.NAME%>_SUCCESS_<%= props.random%>',
+  <%= props.NAME%>_FAILURE: '<%= props.NAME%>_FAILURE_<%= props.random%>',
+}
+
+// Action & Creators
+
+const { Creators } = createActions({
+  <%= props.name%>Request: null,
+  <%= props.name%>Success: ['data'],
+  <%= props.name%>Failure: ['error'],
+});
+
+export const <%= props.Name%>Types = Types;
+export const <%= props.Name%>Actions = Creators;
+
+// Initial State
+
+export const INITIAL_STATE = Immutable({
+  data: [],
+  loading: false,
+  error: null,
+});
+
+// Reducer Functions
+
+const <%= props.name%>Request = state => ({ ...state, loading: true, error: null });
+const <%= props.name%>Success = (state, { data }) => ({ ...state, data, loading: false, error: null});
+const <%= props.name%>Failure = (state, { error }) => ({ ...state, error, loading: false });
+
+// Reducer
+
+export const <%= props.Name%>Reducer = createReducer(INITIAL_STATE, {
+  [Types.<%= props.NAME%>_REQUEST]: <%= props.name%>Request,
+  [Types.<%= props.NAME%>_SUCCESS]: <%= props.name%>Success,
+  [Types.<%= props.NAME%>_FAILURE]: <%= props.name%>Failure,
+});

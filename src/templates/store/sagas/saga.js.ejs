@@ -1,0 +1,14 @@
+import { call, put } from 'redux-saga/effects';
+import Api from '~/services/api';
+
+import { <%= props.Name%>Actions } from '~/store/ducks/<%= props.path%>';
+
+export function* load<%= props.Name%>() {
+  try {
+    // const response = yield call(Api.route, param );
+    // yield put(<%= props.Name%>Actions.<%= props.name%>Success(response.data));
+  } catch (e) {
+    yield put();
+    // <%= props.Name%>Actions.<%= props.name%>Failure('Mensagem de erro')
+  }
+}
