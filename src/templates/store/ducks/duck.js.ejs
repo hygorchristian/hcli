@@ -1,20 +1,48 @@
+/* eslint-disable */
+
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
 //Types
 
 const Types = {
-  <%= props.NAME%>_REQUEST: '<%= props.NAME%>_REQUEST_<%= props.random%>',
-  <%= props.NAME%>_SUCCESS: '<%= props.NAME%>_SUCCESS_<%= props.random%>',
-  <%= props.NAME%>_FAILURE: '<%= props.NAME%>_FAILURE_<%= props.random%>',
-}
+  <%if (props.methods.list) { %><%= props.NAME%>_LIST_REQUEST: '<%= props.NAME%>_LIST_REQUEST_<%= props.random%>',
+  <%= props.NAME%>_LIST_SUCCESS: '<%= props.NAME%>_LIST_SUCCESS_<%= props.random%>',
+  <%= props.NAME%>_LIST_FAILURE: '<%= props.NAME%>_LIST_FAILURE_<%= props.random%>',
+  <% } %><%if (props.methods.item) { %><%= props.NAME%>_ITEM_REQUEST: '<%= props.NAME%>_ITEM_REQUEST_<%= props.random%>',
+  <%= props.NAME%>_ITEM_SUCCESS: '<%= props.NAME%>_ITEM_SUCCESS_<%= props.random%>',
+  <%= props.NAME%>_ITEM_FAILURE: '<%= props.NAME%>_ITEM_FAILURE_<%= props.random%>',
+  <% } %><%if (props.methods.create) { %><%= props.NAME%>_CREATE_REQUEST: '<%= props.NAME%>_CREATE_REQUEST_<%= props.random%>',
+  <%= props.NAME%>_CREATE_SUCCESS: '<%= props.NAME%>_CREATE_SUCCESS_<%= props.random%>',
+  <%= props.NAME%>_CREATE_FAILURE: '<%= props.NAME%>_CREATE_FAILURE_<%= props.random%>',
+  <% } %><%if (props.methods.update) { %><%= props.NAME%>_UPDATE_REQUEST: '<%= props.NAME%>_UPDATE_REQUEST_<%= props.random%>',
+  <%= props.NAME%>_UPDATE_SUCCESS: '<%= props.NAME%>_UPDATE_SUCCESS_<%= props.random%>',
+  <%= props.NAME%>_UPDATE_FAILURE: '<%= props.NAME%>_UPDATE_FAILURE_<%= props.random%>',
+  <% } %><%if (props.methods.delete) { %><%= props.NAME%>_DELETE_REQUEST: '<%= props.NAME%>_DELETE_REQUEST_<%= props.random%>',
+  <%= props.NAME%>_DELETE_SUCCESS: '<%= props.NAME%>_DELETE_SUCCESS_<%= props.random%>',
+  <%= props.NAME%>_DELETE_FAILURE: '<%= props.NAME%>_DELETE_FAILURE_<%= props.random%>',
+  <% } %>
+};
 
 // Action & Creators
 
 const { Creators } = createActions({
-  <%= props.name%>Request: null,
-  <%= props.name%>Success: ['data'],
-  <%= props.name%>Failure: ['error'],
+  <%if (props.methods.list) { %><%= props.name%>ListRequest: null,
+  <%= props.name%>ListSuccess: ['data'],
+  <%= props.name%>ListFailure: ['error'],
+  <% } %><%if (props.methods.item) { %><%= props.name%>ItemRequest: ['id'],
+  <%= props.name%>ItemSuccess: ['data'],
+  <%= props.name%>ItemFailure: ['error'],
+  <% } %><%if (props.methods.create) { %><%= props.name%>CreateRequest: ['data'],
+  <%= props.name%>CreateSuccess: ['data', 'message'],
+  <%= props.name%>CreateFailure: ['error'],
+  <% } %><%if (props.methods.update) { %><%= props.name%>UpdateRequest: ['id', 'data'],
+  <%= props.name%>UpdateSuccess: ['data', 'message'],
+  <%= props.name%>UpdateFailure: ['error'],
+  <% } %><%if (props.methods.delete) { %><%= props.name%>DeleteRequest: ['id'],
+  <%= props.name%>DeleteSuccess: ['message'],
+  <%= props.name%>DeleteFailure: ['error'],
+  <% } %>
 });
 
 export const <%= props.Name%>Types = Types;
@@ -23,21 +51,70 @@ export const <%= props.Name%>Actions = Creators;
 // Initial State
 
 export const INITIAL_STATE = Immutable({
-  data: [],
-  loading: false,
-  error: null,
+  <%if (props.methods.create) { %>create:{
+    data: null,
+    message: null,
+    loading: false,
+    error: null,
+  },
+  <% } %><%if (props.methods.item) { %>item:{
+    data: null,
+    loading: false,
+    error: null,
+  },
+  <% } %><%if (props.methods.list) { %>list:{
+    data: [],
+    loading: false,
+    error: null,
+  },
+  <% } %><%if (props.methods.update) { %>update:{
+    data: null,
+    message: null,
+    loading: false,
+    error: null,
+  },
+  <% } %><%if (props.methods.delete) { %>delete:{
+    message: null,
+    loading: false,
+    error: null,
+  },
+  <% } %>
 });
 
 // Reducer Functions
 
-const <%= props.name%>Request = state => ({ ...state, loading: true, error: null });
-const <%= props.name%>Success = (state, { data }) => ({ ...state, data, loading: false, error: null});
-const <%= props.name%>Failure = (state, { error }) => ({ ...state, error, loading: false });
-
+<%if (props.methods.create) { %>const <%= props.name%>CreateRequest = state => ({ ...state, create: { loading: true, error: null } });
+const <%= props.name%>CreateSuccess = (state, { data, message }) => ({ ...state, create: {data, message, loading: false, error: null}});
+const <%= props.name%>CreateFailure = (state, { error }) => ({ ...state, create: { error, loading: false } });
+<% } %><%if (props.methods.item) { %>const <%= props.name%>ItemRequest = state => ({ ...state, item: { loading: true, error: null }});
+const <%= props.name%>ItemSuccess = (state, { data }) => ({ ...state, item: { data, loading: false, error: null}});
+const <%= props.name%>ItemFailure = (state, { error }) => ({ ...state, item: { error, loading: false }});
+<% } %><%if (props.methods.list) { %>const <%= props.name%>ListRequest = state => ({ ...state, list: { loading: true, error: null }});
+const <%= props.name%>ListSuccess = (state, { data }) => ({ ...state, list: { data, loading: false, error: null }});
+const <%= props.name%>ListFailure = (state, { error }) => ({ ...state, list: { error, loading: false }});
+<% } %><%if (props.methods.update) { %>const <%= props.name%>UpdateRequest = state => ({ ...state, update: { loading: true, error: null }});
+const <%= props.name%>UpdateSuccess = (state, { data, message }) => ({ ...state, update: { data, message, loading: false, error: null }});
+const <%= props.name%>UpdateFailure = (state, { error }) => ({ ...state, update: { error, loading: false, message: false }});
+<% } %><%if (props.methods.delete) { %>const <%= props.name%>DeleteRequest = state => ({ ...state, delete: { loading: true, error: null }});
+const <%= props.name%>DeleteSuccess = (state, { message }) => ({ ...state, delete: { message, loading: false, error: null }});
+const <%= props.name%>DeleteFailure = (state, { error }) => ({ ...state, delete: { error, loading: false }});
+<% } %>
 // Reducer
 
 export const <%= props.Name%>Reducer = createReducer(INITIAL_STATE, {
-  [Types.<%= props.NAME%>_REQUEST]: <%= props.name%>Request,
-  [Types.<%= props.NAME%>_SUCCESS]: <%= props.name%>Success,
-  [Types.<%= props.NAME%>_FAILURE]: <%= props.name%>Failure,
+  <%if (props.methods.list) { %>[Types.<%= props.NAME%>_LIST_REQUEST]: <%= props.name%>ListRequest,
+  [Types.<%= props.NAME%>_LIST_SUCCESS]: <%= props.name%>ListSuccess,
+  [Types.<%= props.NAME%>_LIST_FAILURE]: <%= props.name%>ListFailure,
+  <% } %><%if (props.methods.item) { %>[Types.<%= props.NAME%>_ITEM_REQUEST]: <%= props.name%>ItemRequest,
+  [Types.<%= props.NAME%>_ITEM_SUCCESS]: <%= props.name%>ItemSuccess,
+  [Types.<%= props.NAME%>_ITEM_FAILURE]: <%= props.name%>ItemFailure,
+  <% } %><%if (props.methods.create) { %>[Types.<%= props.NAME%>_CREATE_REQUEST]: <%= props.name%>CreateRequest,
+  [Types.<%= props.NAME%>_CREATE_SUCCESS]: <%= props.name%>CreateSuccess,
+  [Types.<%= props.NAME%>_CREATE_FAILURE]: <%= props.name%>CreateFailure,
+  <% } %><%if (props.methods.update) { %>[Types.<%= props.NAME%>_UPDATE_REQUEST]: <%= props.name%>UpdateRequest,
+  [Types.<%= props.NAME%>_UPDATE_SUCCESS]: <%= props.name%>UpdateSuccess,
+  [Types.<%= props.NAME%>_UPDATE_FAILURE]: <%= props.name%>UpdateFailure,
+  <% } %><%if (props.methods.delete) { %>[Types.<%= props.NAME%>_DELETE_REQUEST]: <%= props.name%>DeleteRequest,
+  [Types.<%= props.NAME%>_DELETE_SUCCESS]: <%= props.name%>DeleteSuccess,
+  [Types.<%= props.NAME%>_DELETE_FAILURE]: <%= props.name%>DeleteFailure,<% } %>
 });

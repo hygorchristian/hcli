@@ -3,7 +3,7 @@ const { capitalizeFirstLetter, snakeUpperCase, replaceInFile } = require('../uti
 module.exports = toolbox => {
   const { print, template, filesystem } = toolbox
 
-  async function createSaga (name) {
+  async function createSaga (name, methods) {
     if (!name) {
       print.error('O nome deve ser informado.')
       return
@@ -23,7 +23,8 @@ module.exports = toolbox => {
         name: filename,
         Name,
         NAME,
-        path: name
+        path: name,
+        methods
       }
     })
 
@@ -37,20 +38,34 @@ module.exports = toolbox => {
       })
     }
 
+    const keys = Object.keys(methods);
+
+    let imports = 'import { '
+    let calls = ''
+
+    keys.forEach(key => {
+      imports += `${key}${Name}, `
+      calls += '    takeLatest(' + Name + 'Types.' + NAME;
+      calls += '_' + key.toUpperCase()
+      calls += '_REQUEST, ' + key + Name + '),\n'
+    })
+
+    imports += `} from './${filename}';`
+
     replaceInFile(
       target,
       [
         {
-          target: '//import-types',
-          data: `import { ${Name}Types } from '~/store/ducks/${name}`
+          target: '// import-types',
+          data: `import { ${Name}Types } from '~/store/ducks/${name}';`
         },
         {
-          target: '//import-saga',
-          data: `import { load${Name} } from './${filename}'`
+          target: '// import-saga',
+          data: imports
         },
         {
-          target: '//saga',
-          data: `    takeLatest(${Name}Types.${NAME}_REQUEST, load${Name})`
+          target: '// saga',
+          data: calls
         }
       ]
     )

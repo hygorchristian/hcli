@@ -3,12 +3,53 @@ import Api from '~/services/api';
 
 import { <%= props.Name%>Actions } from '~/store/ducks/<%= props.path%>';
 
-export function* load<%= props.Name%>() {
+<%if (props.methods.list) { %>export function* list<%= props.Name%>() {
   try {
     // const response = yield call(Api.route, param );
-    // yield put(<%= props.Name%>Actions.<%= props.name%>Success(response.data));
+    // yield put(<%= props.Name%>Actions.<%= props.name%>ListSuccess(response.data));
   } catch (e) {
     yield put();
-    // <%= props.Name%>Actions.<%= props.name%>Failure('Mensagem de erro')
+    // <%= props.Name%>Actions.<%= props.name%>ListFailure('Mensagem de erro')
   }
 }
+<% } %>
+<%if (props.methods.item) { %>export function* item<%= props.Name%>() {
+  try {
+    // const response = yield call(Api.route, param );
+    // yield put(<%= props.Name%>Actions.<%= props.name%>ItemSuccess(response.data));
+  } catch (e) {
+    yield put();
+    // <%= props.Name%>Actions.<%= props.name%>ItemFailure('Mensagem de erro')
+  }
+}
+<% } %>
+<%if (props.methods.create) { %>export function* create<%= props.Name%>() {
+  try {
+    // const response = yield call(Api.route, param );
+    // yield put(<%= props.Name%>Actions.<%= props.name%>CreateSuccess(response.data, '<%= props.Name%> criado com sucesso!'));
+  } catch (e) {
+    yield put();
+    // <%= props.Name%>Actions.<%= props.name%>CreateFailure('Mensagem de erro')
+  }
+}
+<% } %>
+<%if (props.methods.update) { %>export function* update<%= props.Name%>() {
+  try {
+    // const response = yield call(Api.route, param );
+    // yield put(<%= props.Name%>Actions.<%= props.name%>UpdateSuccess(response.data, '<%= props.Name%> atualizado com sucesso!'));
+  } catch (e) {
+    yield put();
+    // <%= props.Name%>Actions.<%= props.name%>UpdateFailure('Mensagem de erro')
+  }
+}
+<% } %>
+<%if (props.methods.delete) { %>export function* delete<%= props.Name%>() {
+  try {
+    // const response = yield call(Api.route, param );
+    // yield put(<%= props.Name%>Actions.<%= props.name%>DeleteSuccess('<%= props.Name%> deletado com sucesso!'));
+  } catch (e) {
+    yield put();
+    // <%= props.Name%>Actions.<%= props.name%>DeleteFailure('Mensagem de erro')
+  }
+}
+<% } %>

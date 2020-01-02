@@ -1,10 +1,10 @@
-const { capitalizeFirstLetter, snakeUpperCase, replaceInFile, fileExists } = require('../utils/helpers')
+const { capitalizeFirstLetter, snakeUpperCase, replaceInFile } = require('../utils/helpers')
 const crypto = require('crypto')
 
 module.exports = toolbox => {
   const { print, template, filesystem } = toolbox;
 
-  async function createDuck (name) {
+  async function createDuck (name, methods) {
     if (!name) {
       print.error('O nome deve ser informado.')
       return
@@ -24,7 +24,8 @@ module.exports = toolbox => {
         name: filename,
         Name,
         NAME,
-        random: crypto.randomBytes(8).toString('hex').toUpperCase()
+        random: crypto.randomBytes(8).toString('hex').toUpperCase(),
+        methods
       }
     })
 
@@ -42,11 +43,11 @@ module.exports = toolbox => {
       target,
       [
         {
-          target: '//import',
-          data: `import { ${capitalizeFirstLetter(filename)}Reducer as ${filename} } from './${name}'`
+          target: '// import',
+          data: `import { ${capitalizeFirstLetter(filename)}Reducer as ${filename} } from './${filename}';`
         },
         {
-          target: '//reducer',
+          target: '// reducer',
           data: `  ${filename},`
         }
       ]
