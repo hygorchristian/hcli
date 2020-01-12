@@ -1,0 +1,16 @@
+const Route = use('Route')
+
+/*
+|--------------------------------------------------------------------------
+| <%= props.names.resource%>
+|--------------------------------------------------------------------------
+|
+| Routes for the <%= props.names.resource%> resource
+|
+*/
+
+Route.post('/<%= props.names.plural%>', '<%= props.classNames.controller%>.store').validator('<%= props.names.validatorCreate%>').middleware(['auth'])
+Route.get('/<%= props.names.plural%>', '<%= props.classNames.controller%>.index')
+Route.get('/<%= props.names.plural%>/:id', '<%= props.classNames.controller%>.show')
+Route.put('/<%= props.names.plural%>/:id', '<%= props.classNames.controller%>.update').validator('<%= props.names.validatorUpdate%>').middleware(['auth'])
+Route.delete('/<%= props.names.plural%>/:id', '<%= props.classNames.controller%>.destroy').middleware(['auth'])

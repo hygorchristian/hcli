@@ -3,30 +3,9 @@
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
-//Types
+// Types, Actions & Creators
 
-const Types = {
-  <%if (props.methods.list) { %><%= props.NAME%>_LIST_REQUEST: '<%= props.NAME%>_LIST_REQUEST_<%= props.random%>',
-  <%= props.NAME%>_LIST_SUCCESS: '<%= props.NAME%>_LIST_SUCCESS_<%= props.random%>',
-  <%= props.NAME%>_LIST_FAILURE: '<%= props.NAME%>_LIST_FAILURE_<%= props.random%>',
-  <% } %><%if (props.methods.item) { %><%= props.NAME%>_ITEM_REQUEST: '<%= props.NAME%>_ITEM_REQUEST_<%= props.random%>',
-  <%= props.NAME%>_ITEM_SUCCESS: '<%= props.NAME%>_ITEM_SUCCESS_<%= props.random%>',
-  <%= props.NAME%>_ITEM_FAILURE: '<%= props.NAME%>_ITEM_FAILURE_<%= props.random%>',
-  <% } %><%if (props.methods.create) { %><%= props.NAME%>_CREATE_REQUEST: '<%= props.NAME%>_CREATE_REQUEST_<%= props.random%>',
-  <%= props.NAME%>_CREATE_SUCCESS: '<%= props.NAME%>_CREATE_SUCCESS_<%= props.random%>',
-  <%= props.NAME%>_CREATE_FAILURE: '<%= props.NAME%>_CREATE_FAILURE_<%= props.random%>',
-  <% } %><%if (props.methods.update) { %><%= props.NAME%>_UPDATE_REQUEST: '<%= props.NAME%>_UPDATE_REQUEST_<%= props.random%>',
-  <%= props.NAME%>_UPDATE_SUCCESS: '<%= props.NAME%>_UPDATE_SUCCESS_<%= props.random%>',
-  <%= props.NAME%>_UPDATE_FAILURE: '<%= props.NAME%>_UPDATE_FAILURE_<%= props.random%>',
-  <% } %><%if (props.methods.delete) { %><%= props.NAME%>_DELETE_REQUEST: '<%= props.NAME%>_DELETE_REQUEST_<%= props.random%>',
-  <%= props.NAME%>_DELETE_SUCCESS: '<%= props.NAME%>_DELETE_SUCCESS_<%= props.random%>',
-  <%= props.NAME%>_DELETE_FAILURE: '<%= props.NAME%>_DELETE_FAILURE_<%= props.random%>',
-  <% } %>
-};
-
-// Action & Creators
-
-const { Creators } = createActions({
+const { Creators, Types } = createActions({
   <%if (props.methods.list) { %><%= props.name%>ListRequest: null,
   <%= props.name%>ListSuccess: ['data'],
   <%= props.name%>ListFailure: ['error'],

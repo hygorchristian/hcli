@@ -10,6 +10,12 @@ function snakeUpperCase(string) {
   }).toUpperCase();
 }
 
+function snakeLowerCase(string) {
+  return string.replace(/[\w]([A-Z])/g, function(m) {
+    return m[0] + "_" + m[1];
+  }).toLowerCase();
+}
+
 function replaceInFile(path, replaces){
   var rootDir = process.cwd();
 
@@ -37,6 +43,7 @@ function fileExists(path){
 module.exports = {
   capitalizeFirstLetter,
   snakeUpperCase,
+  snakeLowerCase,
   replaceInFile,
   fileExists
 }

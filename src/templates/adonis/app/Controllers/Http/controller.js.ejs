@@ -1,0 +1,53 @@
+'use strict'
+
+const <%= props.classNames.model%> = use('App/Models/<%= props.classNames.model%>')
+
+class <%= props.classNames.controller%> {
+  async index ({ request }) {
+    const {
+      page = 1,
+      perPage = 10,
+      sort = 'created_at',
+      order = 'ASC'
+    } = request.get()
+
+    const query = <%= props.classNames.model%>.query().orderBy(sort, order)
+    const <%= props.names.plural%> = await query.paginate(page, perPage)
+    return <%= props.names.plural%>
+  }
+
+  async show ({ params }) {
+    const <%= props.names.single%> = await <%= props.classNames.model%>.findOrFail(params.id)
+    return <%= props.names.single%>
+  }
+
+  async store ({ request }) {
+    const data = request.only([<% for(var i=0; i < props.fields.length; i++) { %>
+      '<%= props.fields[i].field %>', <% } %>
+    ])
+
+    const <%= props.names.single%> = await <%= props.classNames.model%>.create(data)
+
+    return <%= props.names.single%>
+  }
+
+  async update ({ params, request }) {
+    const <%= props.names.single%> = await <%= props.classNames.model%>.findOrFail(params.id)
+    const data = request.only([<% for(var i=0; i < props.fields.length; i++) { %>
+      '<%= props.fields[i].field %>', <% } %>
+    ])
+
+    <%= props.names.single%>.merge(data)
+
+    await <%= props.names.single%>.save()
+
+    return <%= props.names.single%>
+  }
+
+  async destroy ({ params }) {
+    const <%= props.names.single%> = await <%= props.classNames.model%>.findOrFail(params.id)
+    <%= props.names.single%>.delete()
+  }
+}
+
+module.exports = <%= props.classNames.controller%>

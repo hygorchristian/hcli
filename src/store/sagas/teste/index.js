@@ -1,3 +1,4 @@
+
 import { all, takeLatest } from 'redux-saga/effects';
 
 import { DiabloTypes } from '~/store/ducks/teste/diablo';

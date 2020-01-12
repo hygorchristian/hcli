@@ -1,0 +1,15 @@
+'use strict'
+
+class <%= props.className%> {
+  get validateAll () {
+    return true
+  }
+
+  get rules () {
+    return {<% if(!props.create){for(var i=0; i < props.fields.length; i++) { %>
+      <%= props.fields[i].field %>: 'required',<% }} %>
+    }
+  }
+}
+
+module.exports = <%= props.className%>

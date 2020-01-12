@@ -1,0 +1,26 @@
+'use strict'
+
+const ModelFilter = use('ModelFilter')
+
+class UserFilter extends ModelFilter {
+
+  // This will filter 'company_id' OR 'company'
+  company (id) {
+    return this.where('company_id', +id)
+  }
+
+  name (name) {
+    return this.where(function () {
+      this.where('first_name', 'LIKE', `%${name}%`)
+        .orWhere('last_name', 'LIKE', `%${name}%`)
+    })
+  }
+
+  mobilePhone (phone) {
+    return this.where('mobile_phone', 'LIKE', `${phone}%`)
+  }
+
+  secretMethod (secretParameter) {
+    return this.where('some_column', true)
+  }
+}

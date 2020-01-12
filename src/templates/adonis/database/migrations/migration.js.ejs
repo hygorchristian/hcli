@@ -1,0 +1,22 @@
+'use strict'
+
+/** @type {import('@adonisjs/lucid/src/Schema')} */
+const Schema = use('Schema')
+
+class <%= props.classNames.migration%> extends Schema {
+  up () {
+    this.create('<%= props.names.tableName%>', (table) => {
+      table.increments()
+      <% for(var i=0; i < props.fields.length; i++) { %>
+      table.<%= props.fields[i].type %>('<%= props.fields[i].field %>') <% } %>
+
+      table.timestamps()
+    })
+  }
+
+  down () {
+    this.drop('<%= props.names.tableName%>')
+  }
+}
+
+module.exports = <%= props.classNames.migration%>
