@@ -8,3 +8,11 @@ build
 .vscode
 
 .idea
+
+store
+screens
+components
+app
+routes
+database
+test
