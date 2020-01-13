@@ -17,22 +17,36 @@ module.exports = toolbox => {
 
     const type = await isReactNative() ? 'native' : 'web';
 
-    await template.generate({
-      template: `${type}/screen.js.ejs` ,
-      target: `src/${folder}/${name}/${filename}.js`,
-      props: { filename }
-    })
+    if(!filesystem.exists(`src/${folder}/${name}/${filename}.js`)){
+      await template.generate({
+        template: `${type}/screen.js.ejs` ,
+        target: `src/${folder}/${name}/${filename}.js`,
+        props: { filename }
+      })
+    } else {
+      print.error(`O arquivo /${name}/${filename}.js já existe`)
+    }
 
-    await template.generate({
-      template: `${type}/style.js.ejs`,
-      target: `src/${folder}/${name}/styles.js`
-    })
+    if(!filesystem.exists(`src/${folder}/${name}/styles.js`)){
+      await template.generate({
+        template: `${type}/style.js.ejs`,
+        target: `src/${folder}/${name}/styles.js`
+      })
+    } else {
+      print.error(`O arquivo /${name}/index.js já existe`)
+    }
 
-    await template.generate({
-      template: `${type}/screen-index.js.ejs`,
-      target: `src/${folder}/${name}/index.js`,
-      props: { filename }
-    })
+
+    if(!filesystem.exists(`src/${folder}/${name}/index.js`)){
+      await template.generate({
+        template: `${type}/screen-index.js.ejs`,
+        target: `src/${folder}/${name}/index.js`,
+        props: { filename }
+      })
+    } else {
+      print.error(`O arquivo /${name}/index.js já existe`)
+    }
+
 
     print.success(`A tela ${filename} foi criada`)
   }
