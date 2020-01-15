@@ -1,0 +1,35 @@
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      created_at:
+        type: string
+      updated_at:
+        type: string
+    required:
+      - username
+      - email
+      - password
+  UserItems:
+    type: object
+    properties:
+      total:
+        type: integer
+      perPage:
+        type: integer
+      page:
+        type: integer
+      lastPage:
+        type: integer
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/User"
