@@ -10,6 +10,12 @@ class <%= props.className%> {
       <%= props.fields[i].field %>: 'required',<% }} %>
     }
   }
+
+  get messages () {
+    return {<% if(!props.create){for(var i=0; i < props.fields.length; i++) { %>
+      '<%= props.fields[i].field %>.required': 'Você deve informar o campo <%= props.fields[i].field %>',<% }} %>
+    }
+  }
 }
 
 module.exports = <%= props.className%>
