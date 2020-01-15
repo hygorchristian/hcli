@@ -16,7 +16,11 @@ module.exports = toolbox => {
       model: `${capitalizeFirstLetter(name)}.js`,
       validator: `${capitalizeFirstLetter(name)}`,
       controller: `${capitalizeFirstLetter(name)}Controller.js`,
-      route: `${capitalizeFirstLetter(name)}.js`
+      route: `${capitalizeFirstLetter(name)}.js`,
+      docs: {
+        controller: `${snakeLowerCase(name)}.yml`,
+        model: `${snakeLowerCase(name)}.yml`
+      }
     }
 
     const classNames = {
@@ -98,12 +102,34 @@ module.exports = toolbox => {
 
     if (!filesystem.exists(`test/functional/${fileNames.test}`)) {
       await template.generate({
-        template: 'adonis/test/test.js.ejs',
+        template: 'adonis/test/functional/test.js.ejs',
         target: `test/functional/${fileNames.test}`,
         props: { classNames, names, fields }
       })
     } else {
       print.error(`O arquivo ${fileNames.test} já existe`)
+    }
+
+    // Docs
+
+    if (!filesystem.exists(`docs/controllers/${fileNames.docs.controller}`)) {
+      await template.generate({
+        template: 'adonis/docs/controllers/controller.yml.ejs',
+        target: `docs/controllers/${fileNames.docs.controller}`,
+        props: { classNames, names, fields }
+      })
+    } else {
+      print.error(`O arquivo ${fileNames.docs.controller} já existe`)
+    }
+
+    if (!filesystem.exists(`docs/models/${fileNames.docs.model}`)) {
+      await template.generate({
+        template: 'adonis/docs/models/model.yml.ejs',
+        target: `docs/models/${fileNames.docs.model}`,
+        props: { classNames, names, fields }
+      })
+    } else {
+      print.error(`O arquivo ${fileNames.docs.controller} já existe`)
     }
   }
 

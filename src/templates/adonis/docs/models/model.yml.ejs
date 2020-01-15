@@ -1,0 +1,29 @@
+definitions:
+  <%= props.names.resource%>:
+    type: object
+    properties:
+      id:
+        type: integer<% for(var i=0; i < props.fields.length; i++) { %>
+      <%= props.fields[i].field %>:
+        type: <%= props.fields[i].type %><% } %>
+      created_at:
+        type: string
+      updated_at:
+        type: string
+    required:<% for(var i=0; i < props.fields.length; i++) { %>
+      - <%= props.fields[i].field %><% } %>
+  <%= props.names.resource%>Items:
+    type: object
+    properties:
+      total:
+        type: integer
+      perPage:
+        type: integer
+      page:
+        type: integer
+      lastPage:
+        type: integer
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/<%= props.names.resource%>"
