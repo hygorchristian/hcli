@@ -1,4 +1,4 @@
-const { getTest, getTestUpdate, getMigrationRef } = require('../utils/strings')
+const { getTest, getTestUpdate, getMigrationRef, getTestData } = require('../utils/strings')
 
 module.exports = {
   name: 'adonis:res',
@@ -30,6 +30,7 @@ module.exports = {
         res.required = attrs.required
         res.test = getTest(attrs.type)
         res.testUpdate = getTestUpdate(attrs.type)
+        res.createData = getTestData(field, attrs.type)
 
         if (attrs.ref) {
           res.ref = {
@@ -43,8 +44,8 @@ module.exports = {
       }
 
       await createResource(resource, fields)
-
-      print.success(fields)
     }
+
+    print.success('Recurso criado com sucesso!')
   }
 }

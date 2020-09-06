@@ -19,7 +19,7 @@ before(async () => {
 
   for (let i = 0; i < 5; i++) {
     await <%= props.classNames.model%>.create({<% for(var i=0; i < props.fields.length; i++) { %>
-      <%= props.fields[i].field %>: <%- props.fields[i].test %> + 1,<% } %>
+      <%- props.fields[i].createData %>,<% } %>
     })
   }
 })
@@ -49,7 +49,7 @@ test('Create <%= props.names.single%>', async ({ client }) => {
 
 test('Get one <%= props.names.single%>', async ({ client }) => {
   const response = await client
-    .get('/<%= props.names.plural%>/1')
+    .get('/<%= props.names.plural%>/2')
     .end()
 
   response.assertStatus(200)
@@ -64,7 +64,7 @@ test('Get all <%= props.names.single%>s', async ({ client }) => {
 
   response.assertJSONSubset({
     data: [{<% for(var i=0; i < props.fields.length; i++) { %>
-      <%= props.fields[i].field %>: <%- props.fields[i].test %>,<% } %>
+      <%- props.fields[i].createData %>,<% } %>
     }]
   })
 })

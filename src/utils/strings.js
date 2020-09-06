@@ -22,7 +22,9 @@ const getTest = type => {
     case 'text':
       return "'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta egestas laoreet. Ut in ligula quis risus ultrices interdum.'"
     case 'integer':
-      return 123
+      return 1
+    case 'float':
+      return 7.5
     case 'boolean':
       return true
     case 'date':
@@ -41,7 +43,9 @@ const getTestUpdate = type => {
     case 'text':
       return "'Nam mollis, leo eu lacinia venenatis, sapien elit elementum sapien, non sollicitudin augue arcu ac urna. Maecenas et convallis neque.'"
     case 'integer':
-      return 321
+      return 2
+    case 'float':
+      return 12.75
     case 'boolean':
       return false
     case 'date':
@@ -52,6 +56,8 @@ const getTestUpdate = type => {
       return null
   }
 }
+
+const getTestData = (field, type) => `${field}: ${getTest(type)}`
 
 const getMigrationRef = res => {
   return `
@@ -68,5 +74,6 @@ module.exports = {
   mensagemFormik,
   getTest,
   getTestUpdate,
-  getMigrationRef
+  getMigrationRef,
+  getTestData
 }

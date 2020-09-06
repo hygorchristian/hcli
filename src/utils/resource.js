@@ -9,10 +9,8 @@ const getFilenames = (name) => {
     validator: `${capitalizeFirstLetter(name)}`,
     controller: `${capitalizeFirstLetter(name)}Controller.js`,
     route: `${capitalizeFirstLetter(name)}.js`,
-    docs: {
-      controller: `${snakeLowerCase(name)}.yml`,
-      model: `${snakeLowerCase(name)}.yml`
-    }
+    docsController: `${snakeLowerCase(name)}.yml`,
+    docsModel: `${snakeLowerCase(name)}.yml`
   }
 }
 
@@ -26,10 +24,10 @@ const getPaths = (name) => {
     model: `app/Models/${fileNames.model}`,
     validatorCreate: `app/Validators/${fileNames.validator}/${classNames.validatorCreate}.js`,
     validatorUpdate: `app/Validators/${fileNames.validator}/${classNames.validatorUpdate}.js`,
-    controller: `app/Validators/Http/${fileNames.controller}`,
+    controller: `app/Controllers/Http/${fileNames.controller}`,
     route: `routes/${fileNames.route}`,
-    docsController: `docs/controllers/${fileNames.docs.controller}`,
-    docsModel: `docs/models/${fileNames.docs.model}`
+    docsController: `docs/controllers/${fileNames.docsController}`,
+    docsModel: `docs/models/${fileNames.docsController}`
   }
 }
 
@@ -84,6 +82,14 @@ const generate = (type, name, fields, toolbox) => {
 
   const props = {
     fileNames, classNames, names, fields
+  }
+
+  if (type === 'validatorCreate') {
+    props.className = classNames.validatorCreate
+  }
+
+  if (type === 'validatorUpdate') {
+    props.className = classNames.validatorUpdate
   }
 
   if (toolbox.filesystem.exists(target)) {

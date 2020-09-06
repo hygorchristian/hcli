@@ -33,14 +33,14 @@ module.exports = toolbox => {
       screen: {
         name,
         filename: `src/${folder}/${name}/${filename}.js`,
-        template: 'native/screen-prosperita.js.ejs',
+        template: 'native/screen.js.ejs',
         target: `src/${folder}/${name}/${filename}.js`,
         props: { filename }
       },
       style: {
         name,
         filename: `src/${folder}/${name}/styles.${lang}`,
-        template: 'native/style-prosperita.js.ejs',
+        template: 'native/style.js.ejs',
         target: `src/${folder}/${name}/styles.${lang}`,
         props: {}
       },
@@ -62,5 +62,5 @@ module.exports = toolbox => {
     print.success(`A tela ${filename} foi criada`)
   }
 
-  toolbox.createComponentProsperita = createComponent
+  toolbox.createScreen = createComponent
 }

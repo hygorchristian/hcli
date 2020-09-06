@@ -7,8 +7,10 @@ class <%= props.classNames.migration%> extends Schema {
   up () {
     this.create('<%= props.names.tableName%>', (table) => {
       table.increments()
-      <% for(var i=0; i < props.fields.length; i++) { %>
-      table.<%= props.fields[i].type %>('<%= props.fields[i].field %>') <% } %>
+
+      <% for(var i=0; i < props.fields.length; i++) {  if(props.fields[i].ref) { %>
+          <%- props.fields[i].ref.migration_ref %><% } else { %>table.<%= props.fields[i].type %>('<%= props.fields[i].field %>')
+      <% }} %>
 
       table.timestamps()
     })

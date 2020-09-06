@@ -1,12 +1,24 @@
 module.exports = toolbox => {
-  const { filesystem, print, template } = toolbox;
+  const { filesystem, print, template: _template } = toolbox;
+
+  async function createRes({name, filename, template, target, props}){
+    if(!filesystem.exists(filename)){
+      await _template.generate({
+        template,
+        target,
+        props
+      })
+    } else {
+      print.error(`O arquivo /${name}/${filename} já existe`)
+    }
+  }
 
   async function isReactNative(){
     const package = await filesystem.read('package.json', 'json');
     return !!package.dependencies['react-native'];
   }
 
-  async function createComponent(folder, name, duck, saga){
+  async function createComponent(folder, { name, lang }){
     if(!name){
       print.error('O nome deve ser informado.')
       return
@@ -17,36 +29,33 @@ module.exports = toolbox => {
 
     const type = await isReactNative() ? 'native' : 'web';
 
-    if(!filesystem.exists(`src/${folder}/${name}/${filename}.js`)){
-      await template.generate({
-        template: `${type}/screen.js.ejs` ,
-        target: `src/${folder}/${name}/${filename}.js`,
+    const res = {
+      screen: {
+        name,
+        filename: `src/${folder}/${name}/index.${lang}`,
+        template: `${type}/screen.${lang}.ejs`,
+        target: `src/${folder}/${name}/index.${lang}`,
         props: { filename }
-      })
-    } else {
-      print.error(`O arquivo /${name}/${filename}.js já existe`)
-    }
-
-    if(!filesystem.exists(`src/${folder}/${name}/styles.js`)){
-      await template.generate({
-        template: `${type}/style.js.ejs`,
-        target: `src/${folder}/${name}/styles.js`
-      })
-    } else {
-      print.error(`O arquivo /${name}/index.js já existe`)
-    }
-
-
-    if(!filesystem.exists(`src/${folder}/${name}/index.js`)){
-      await template.generate({
-        template: `${type}/screen-index.js.ejs`,
-        target: `src/${folder}/${name}/index.js`,
+      },
+      style: {
+        name,
+        filename: `src/${folder}/${name}/styles.${lang}`,
+        template: `${type}/style.${lang}.ejs`,
+        target: `src/${folder}/${name}/styles.${lang}`,
+        props: {}
+      },
+      index: {
+        name,
+        filename: `src/${folder}/${name}/index.${lang}`,
+        template: `${type}/screen-index.${lang}.ejs`,
+        target: `src/${folder}/${name}/index.${lang}`,
         props: { filename }
-      })
-    } else {
-      print.error(`O arquivo /${name}/index.js já existe`)
+      },
     }
 
+    await createRes(res.screen);
+    await createRes(res.style);
+    // await createRes(res.index);
 
     print.success(`A tela ${filename} foi criada`)
   }
