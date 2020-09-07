@@ -53,13 +53,11 @@ module.exports = toolbox => {
       },
     }
 
-    console.log(res.screen)
-
     await createRes(res.screen);
     await createRes(res.style);
     await createRes(res.index);
 
-    print.success(`A tela ${filename} foi criada`)
+    print.success(`The screen ${filename} was created!`)
   }
 
   toolbox.createComponentProsperita = createComponent

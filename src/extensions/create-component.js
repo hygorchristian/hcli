@@ -57,7 +57,7 @@ module.exports = toolbox => {
     await createRes(res.style);
     // await createRes(res.index);
 
-    print.success(`A tela ${filename} foi criada`)
+    print.success(`The screen ${filename} was created!`)
   }
 
   toolbox.createComponent = createComponent
