@@ -4,7 +4,7 @@ module.exports = {
   run: async toolbox => {
     const { parameters, createComponent } = toolbox
     const name = parameters.first
-    const lang = parameters.options.lang || 'js'
+    const lang = parameters.options.lang || 'ts'
 
     await createComponent('pages', { name, lang })
   }

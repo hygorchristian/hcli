@@ -34,7 +34,7 @@ module.exports = toolbox => {
         name,
         filename: `src/${folder}/${name}/index.${lang}`,
         template: `${type}/screen.${lang}.ejs`,
-        target: `src/${folder}/${name}/index.${lang}`,
+        target: `src/${folder}/${name}/${name}.${lang}x`,
         props: { filename }
       },
       style: {
@@ -55,7 +55,7 @@ module.exports = toolbox => {
 
     await createRes(res.screen);
     await createRes(res.style);
-    // await createRes(res.index);
+    await createRes(res.index);
 
     print.success(`The screen ${filename} was created!`)
   }
