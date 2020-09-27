@@ -1,6 +1,6 @@
-# zygor-cli CLI
+# hcli CLI
 
-A CLI for zygor-cli.
+A CLI for hcli.
 
 ## Customizing your CLI
 

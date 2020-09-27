@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'zygor-cli',
+  name: 'hcli',
   run: async toolbox => {
     const { print } = toolbox
 

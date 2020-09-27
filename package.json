@@ -1,10 +1,10 @@
 {
-  "name": "zygor-cli",
-  "version": "0.0.1",
-  "description": "zygor-cli CLI",
+  "name": "hcli",
+  "version": "1.0.0",
+  "description": "Hygor Dias CLI",
   "private": true,
   "bin": {
-    "zygor-cli": "bin/zygor-cli"
+    "hcli": "bin/hcli"
   },
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",

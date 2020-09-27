@@ -7,10 +7,10 @@ module.exports = toolbox => {
   }
 
   // enable this if you want to read configuration in from
-  // the current folder's package.json (in a "zygor-cli" property),
-  // zygor-cli.config.json, etc.
+  // the current folder's package.json (in a "hcli" property),
+  // hcli.config.json, etc.
   // toolbox.config = {
   //   ...toolbox.config,
-  //   ...toolbox.config.loadConfig(process.cwd(), "zygor-cli")
+  //   ...toolbox.config.loadConfig(process.cwd(), "hcli")
   // }
 }

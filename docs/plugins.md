@@ -1,10 +1,10 @@
-# Plugin guide for zygor-cli
+# Plugin guide for hcli
 
-Plugins allow you to add features to zygor-cli, such as commands and
+Plugins allow you to add features to hcli, such as commands and
 extensions to the `toolbox` object that provides the majority of the functionality
-used by zygor-cli.
+used by hcli.
 
-Creating a zygor-cli plugin is easy. Just create a repo with two folders:
+Creating a hcli plugin is easy. Just create a repo with two folders:
 
 ```
 commands/
@@ -42,6 +42,6 @@ This is then accessible in your plugin's commands as `toolbox.bar`.
 
 # Loading a plugin
 
-To load a particular plugin (which has to start with `zygor-cli-*`),
-install it to your project using `npm install --save-dev zygor-cli-PLUGINNAME`,
-and zygor-cli will pick it up automatically.
+To load a particular plugin (which has to start with `hcli-*`),
+install it to your project using `npm install --save-dev hcli-PLUGINNAME`,
+and hcli will pick it up automatically.
