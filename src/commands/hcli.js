@@ -6,4 +6,3 @@ module.exports = {
     print.info('Welcome to your CLI')
   }
 }
-git remote add origin https://github.com/hygorchristian/hcli.git
