@@ -1,5 +1,5 @@
 module.exports = {
-  name: 'generate:screen',
+  name: 'react:screen',
   description: 'Cria uma nova tela dentro de src/screens',
   run: async toolbox => {
     const { parameters, createScreen } = toolbox

@@ -34,7 +34,7 @@ module.exports = toolbox => {
         name,
         filename: `src/${folder}/${name}/index.${lang}`,
         template: `${type}/screen.${lang}.ejs`,
-        target: `src/${folder}/${name}/${name}.${lang}x`,
+        target: `src/${folder}/${name}/${filename}.${lang}x`,
         props: { filename }
       },
       style: {

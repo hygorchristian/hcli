@@ -32,22 +32,22 @@ module.exports = toolbox => {
     const res = {
       screen: {
         name,
-        filename: `src/${folder}/${name}/${filename}.js`,
-        template: 'native/screen.js.ejs',
-        target: `src/${folder}/${name}/${filename}.js`,
+        filename: `src/${folder}/${name}/${filename}.${lang}x`,
+        template: `native/screen.${lang}.ejs`,
+        target: `src/${folder}/${name}/${filename}.${lang}x`,
         props: { filename }
       },
       style: {
         name,
         filename: `src/${folder}/${name}/styles.${lang}`,
-        template: 'native/style.js.ejs',
+        template: `native/style.${lang}.ejs`,
         target: `src/${folder}/${name}/styles.${lang}`,
         props: {}
       },
       index: {
         name,
         filename: `src/${folder}/${name}/index.${lang}`,
-        template: 'native/screen-index.js.ejs',
+        template: `native/screen-index.${lang}.ejs`,
         target: `src/${folder}/${name}/index.${lang}`,
         props: { filename }
       },
