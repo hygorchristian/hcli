@@ -1,0 +1,102 @@
+import 'config/ReactotronConfig'
+
+import React, { Suspense, useEffect } from 'react'
+import { View, ActivityIndicator } from 'react-native'
+import { StatusBar } from 'react-native'
+import { I18nextProvider } from 'react-i18next'
+import { AppearanceProvider } from 'react-native-appearance'
+import { SafeAreaProvider, initialWindowSafeAreaInsets } from 'react-native-safe-area-context'
+import { ApolloProvider } from '@apollo/react-hooks'
+import i18n from 'shared/i18n'
+import codePush from 'react-native-code-push'
+import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+
+// Before rendering any navigation stack
+// https://reactnavigation.org/docs/react-native-screens/
+import { enableScreens } from 'react-native-screens'
+
+import { COLORS } from 'styles/theme'
+import apolloClient from 'shared/apollo/apolloClient'
+import ModalProviderLegacy from 'shared/modals/modal-provider-legacy'
+import ModalProvider from 'shared/modals/modal-provider'
+import AuthProvider from 'shared/AuthProvider'
+import RootNavigator from 'shared/navigation/root-navigator'
+import { RootErrorBoundary } from 'core/error-boundaries'
+import { initNotifications, endNotifications } from 'shared/notifications'
+
+import { store, persistor } from 'store'
+
+import 'core/aws-config'
+import 'core/sentry-config'
+
+// TODO: [BABBLY-973] Investigate whether we really need storybook
+// import storybook from './storybook'
+
+interface AppProvidersProps {
+  children: any
+}
+
+console.disableYellowBox = true
+
+enableScreens()
+
+const AppProviders: React.FC<AppProvidersProps> = ({ children }: AppProvidersProps) => {
+  // These are all necessary but make for a really messy render function
+  // so we centralize them all here and return the component children (the rest of the app)
+  // in our main App component. All providers in the future can just be added here.
+  return (
+    <I18nextProvider i18n={i18n}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <AppearanceProvider>
+            <AuthProvider>
+              <ModalProviderLegacy>
+                <ModalProvider>
+                  <ApolloProvider client={apolloClient}>{children}</ApolloProvider>
+                </ModalProvider>
+              </ModalProviderLegacy>
+            </AuthProvider>
+          </AppearanceProvider>
+        </PersistGate>
+      </Provider>
+    </I18nextProvider>
+  )
+}
+
+const SuspendedView: React.FC = () => {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ActivityIndicator></ActivityIndicator>
+    </View>
+  )
+}
+
+let App: React.FC = () => {
+  useEffect(() => {
+    initNotifications()
+
+    return () => {
+      endNotifications()
+    }
+  }, [])
+
+  return (
+    <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
+      <StatusBar backgroundColor={COLORS.black} barStyle="light-content" translucent={false} />
+      <RootErrorBoundary>
+        <Suspense fallback={<SuspendedView />}>
+          <AppProviders>
+            <RootNavigator />
+          </AppProviders>
+        </Suspense>
+      </RootErrorBoundary>
+    </SafeAreaProvider>
+  )
+}
+
+const codePushOptions = { checkFrequency: codePush.CheckFrequency.ON_APP_RESUME }
+App = codePush(codePushOptions)(App)
+
+export default App
+// export default storybook
