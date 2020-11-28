@@ -33,21 +33,21 @@ module.exports = toolbox => {
       screen: {
         name,
         filename: `src/${folder}/${name}/${filename}.${lang}x`,
-        template: `native/screen.${lang}.ejs`,
+        template: `${type}/screen.${lang}.ejs`,
         target: `src/${folder}/${name}/${filename}.${lang}x`,
         props: { filename }
       },
       style: {
         name,
         filename: `src/${folder}/${name}/styles.${lang}`,
-        template: `native/style.${lang}.ejs`,
+        template: `${type}/style.${lang}.ejs`,
         target: `src/${folder}/${name}/styles.${lang}`,
         props: {}
       },
       index: {
         name,
         filename: `src/${folder}/${name}/index.${lang}`,
-        template: `native/screen-index.${lang}.ejs`,
+        template: `${type}/screen-index.${lang}.ejs`,
         target: `src/${folder}/${name}/index.${lang}`,
         props: { filename }
       },
