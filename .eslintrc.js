@@ -5,10 +5,4 @@ module.exports = {
     'consistent-return': 'off',
     'no-param-reassign': 'off',
   },
-  overrides: [
-    {
-      files: ['**/*.test.js'],
-      extends: ['plugin:jest/recommended', 'plugin:jest/style'],
-    },
-  ],
 };

@@ -39,6 +39,13 @@ module.exports = (toolbox) => {
         target: `src/${folder}/${name}/${filename}.${lang}x`,
         props: { filename },
       },
+      storybook: {
+        name,
+        filename: `src/${folder}/${name}/${filename}.stories.${lang}x`,
+        template: `${type}/stories.${lang}.ejs`,
+        target: `src/${folder}/${name}/${filename}.stories.${lang}x`,
+        props: { filename },
+      },
       style: {
         name,
         filename: `src/${folder}/${name}/styles.${lang}`,
@@ -58,6 +65,7 @@ module.exports = (toolbox) => {
     await createRes(res.screen);
     await createRes(res.style);
     await createRes(res.index);
+    await createRes(res.storybook);
 
     print.success(`The screen ${filename} was created!`);
   }

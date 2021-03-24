@@ -25,8 +25,7 @@
   "dependencies": {
     "crypto": "^1.0.1",
     "gluegun": "^2.1.0",
-    "pluralize": "^8.0.0",
-    "react-native": "^0.63.2"
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
