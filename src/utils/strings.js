@@ -16,64 +16,64 @@ const formik = useFormik({
 `
 
 const getTest = type => {
-  switch (type) {
+    switch (type) {
     case 'string':
-      return "'teste'"
+        return '\'teste\''
     case 'text':
-      return "'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta egestas laoreet. Ut in ligula quis risus ultrices interdum.'"
+        return '\'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porta egestas laoreet. Ut in ligula quis risus ultrices interdum.\''
     case 'integer':
-      return 1
+        return 1
     case 'float':
-      return 7.5
+        return 7.5
     case 'boolean':
-      return true
+        return true
     case 'date':
-      return "'2020-01-09'"
+        return '\'2020-01-09\''
     case 'datetime':
-      return "'2020-01-09 22:29:54'"
+        return '\'2020-01-09 22:29:54\''
     default:
-      return null
-  }
+        return null
+    }
 }
 
 const getTestUpdate = type => {
-  switch (type) {
+    switch (type) {
     case 'string':
-      return "'teste-update'"
+        return '\'teste-update\''
     case 'text':
-      return "'Nam mollis, leo eu lacinia venenatis, sapien elit elementum sapien, non sollicitudin augue arcu ac urna. Maecenas et convallis neque.'"
+        return '\'Nam mollis, leo eu lacinia venenatis, sapien elit elementum sapien, non sollicitudin augue arcu ac urna. Maecenas et convallis neque.\''
     case 'integer':
-      return 2
+        return 2
     case 'float':
-      return 12.75
+        return 12.75
     case 'boolean':
-      return false
+        return false
     case 'date':
-      return "'2021-01-09'"
+        return '\'2021-01-09\''
     case 'datetime':
-      return "'2021-01-09 22:29:54'"
+        return '\'2021-01-09 22:29:54\''
     default:
-      return null
-  }
+        return null
+    }
 }
 
 const getTestData = (field, type) => `${field}: ${getTest(type)}`
 
 const getMigrationRef = res => {
-  return `
+    return `
       table.integer('${snakeLowerCase(res)}_id')
         .unsigned()
         .references('id')
         .inTable('${pluralize.plural(snakeLowerCase(res))}')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
-`;
+`
 }
 
 module.exports = {
-  mensagemFormik,
-  getTest,
-  getTestUpdate,
-  getMigrationRef,
-  getTestData
+    mensagemFormik,
+    getTest,
+    getTestUpdate,
+    getMigrationRef,
+    getTestData
 }

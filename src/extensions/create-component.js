@@ -1,8 +1,8 @@
 module.exports = toolbox => {
-  const { filesystem, print, template: _template } = toolbox;
+  const { filesystem, print, template: _template } = toolbox
 
-  async function createRes({name, filename, template, target, props}){
-    if(!filesystem.exists(filename)){
+  async function createRes ({ name, filename, template, target, props }) {
+    if (!filesystem.exists(filename)) {
       await _template.generate({
         template,
         target,
@@ -13,13 +13,13 @@ module.exports = toolbox => {
     }
   }
 
-  async function isReactNative(){
-    const package = await filesystem.read('package.json', 'json');
-    return !!package.dependencies['react-native'];
+  async function isReactNative () {
+    const pack = await filesystem.read('package.json', 'json')
+    return !!pack.dependencies['react-native']
   }
 
-  async function createComponent(folder, { name, lang }){
-    if(!name){
+  async function createComponent (folder, { name, lang }) {
+    if (!name) {
       print.error('O nome deve ser informado.')
       return
     }
@@ -27,7 +27,7 @@ module.exports = toolbox => {
     const arr = name.split('/')
     const filename = arr[arr.length - 1]
 
-    const type = await isReactNative() ? 'native' : 'web';
+    const type = await isReactNative() ? 'native' : 'web'
 
     const res = {
       screen: {
@@ -50,12 +50,12 @@ module.exports = toolbox => {
         template: `${type}/screen-index.${lang}.ejs`,
         target: `src/${folder}/${name}/index.${lang}`,
         props: { filename }
-      },
+      }
     }
 
-    await createRes(res.screen);
-    await createRes(res.style);
-    await createRes(res.index);
+    await createRes(res.screen)
+    await createRes(res.style)
+    await createRes(res.index)
 
     print.success(`The screen ${filename} was created!`)
   }

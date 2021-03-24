@@ -7,7 +7,6 @@ const printCommand = (t, command, description) => {
   t.print.info(`  \x1b[36m${command}${distance}\x1b[39m${description}`)
 }
 
-
 const printHelper = async (toolbox) => {
   toolbox.print.warning('hcli helper\n')
 
