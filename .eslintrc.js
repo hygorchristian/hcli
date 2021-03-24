@@ -1,31 +1,14 @@
 module.exports = {
-    'env': {
-        'browser': true,
-        'commonjs': true
+  extends: 'airbnb-base',
+  rules: {
+    'no-plusplus': 'off',
+    'consistent-return': 'off',
+    'no-param-reassign': 'off',
+  },
+  overrides: [
+    {
+      files: ['**/*.test.js'],
+      extends: ['plugin:jest/recommended', 'plugin:jest/style'],
     },
-    globals: {
-        process: true
-    },
-    'extends': 'eslint:recommended',
-    'parserOptions': {
-        'ecmaVersion': 6
-    },
-    'rules': {
-        'indent': [
-            'error',
-            4
-        ],
-        'linebreak-style': [
-            'error',
-            'unix'
-        ],
-        'quotes': [
-            'error',
-            'single'
-        ],
-        'semi': [
-            'error',
-            'never'
-        ]
-    }
-}
+  ],
+};
