@@ -1,9 +1,15 @@
 import React from 'react';
 
 import { Container } from './styles';
+import Typography from 'components/Typography';
 
 function <%= props.filename%>() {
-  return <Container />;
+  // todo: finalizar essa tela
+  return (
+    <Container>
+      <Typography><%= props.filename%></Typography>
+    </Container>
+  );
 }
 
 export default <%= props.filename%>;

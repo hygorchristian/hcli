@@ -1,13 +1,13 @@
-const pluralize = require('pluralize');
-const { snakeLowerCase, capitalizeFirstLetter } = require('./helpers');
+const pluralize = require('pluralize')
+const { snakeLowerCase, capitalizeFirstLetter } = require('./helpers')
 
 const getClassnames = (name) => ({
   migration: `${capitalizeFirstLetter(name)}Schema`,
   controller: `${capitalizeFirstLetter(name)}Controller`,
   model: capitalizeFirstLetter(name),
   validatorCreate: `Create${capitalizeFirstLetter(name)}`,
-  validatorUpdate: `Update${capitalizeFirstLetter(name)}`,
-});
+  validatorUpdate: `Update${capitalizeFirstLetter(name)}`
+})
 
 const getFilenames = (name) => ({
   migration: `${Date.now()}_${snakeLowerCase(name)}_schema.js`,
@@ -17,12 +17,12 @@ const getFilenames = (name) => ({
   controller: `${capitalizeFirstLetter(name)}Controller.js`,
   route: `${capitalizeFirstLetter(name)}.js`,
   docsController: `${snakeLowerCase(name)}.yml`,
-  docsModel: `${snakeLowerCase(name)}.yml`,
-});
+  docsModel: `${snakeLowerCase(name)}.yml`
+})
 
 const getPaths = (name) => {
-  const fileNames = getFilenames(name);
-  const classNames = getClassnames(name);
+  const fileNames = getFilenames(name)
+  const classNames = getClassnames(name)
 
   return {
     migration: `database/migrations/${fileNames.migration}`,
@@ -33,9 +33,9 @@ const getPaths = (name) => {
     controller: `app/Controllers/Http/${fileNames.controller}`,
     route: `routes/${fileNames.route}`,
     docsController: `docs/controllers/${fileNames.docsController}`,
-    docsModel: `docs/models/${fileNames.docsController}`,
-  };
-};
+    docsModel: `docs/models/${fileNames.docsController}`
+  }
+}
 
 const getTemplates = () => ({
   migration: 'adonis/database/migrations/migration.js.ejs',
@@ -46,12 +46,12 @@ const getTemplates = () => ({
   controller: 'adonis/app/Controllers/Http/controller.js.ejs',
   route: 'adonis/routes/route.js.ejs',
   docsController: 'adonis/docs/controllers/controller.yml.ejs',
-  docsModel: 'adonis/docs/models/model.yml.ejs',
-});
+  docsModel: 'adonis/docs/models/model.yml.ejs'
+})
 
 const getNames = (name) => {
-  const fileNames = getFilenames(name);
-  const classNames = getClassnames(name);
+  const fileNames = getFilenames(name)
+  const classNames = getClassnames(name)
 
   return {
     tableName: pluralize.plural(snakeLowerCase(name)),
@@ -59,41 +59,41 @@ const getNames = (name) => {
     plural: pluralize.plural(snakeLowerCase(name)),
     validatorUpdate: `${fileNames.validator}/${classNames.validatorUpdate}`,
     validatorCreate: `${fileNames.validator}/${classNames.validatorCreate}`,
-    resource: capitalizeFirstLetter(name),
-  };
-};
+    resource: capitalizeFirstLetter(name)
+  }
+}
 
 const generate = (type, name, fields, toolbox) => {
   // ===========================================================================
-  const fileNames = getFilenames(name);
-  const classNames = getClassnames(name);
-  const names = getNames(name);
+  const fileNames = getFilenames(name)
+  const classNames = getClassnames(name)
+  const names = getNames(name)
   // ===========================================================================
 
-  const filename = fileNames[type];
-  const target = getPaths(name)[type];
-  const template = getTemplates()[type];
+  const filename = fileNames[type]
+  const target = getPaths(name)[type]
+  const template = getTemplates()[type]
 
   const props = {
-    fileNames, classNames, names, fields,
-  };
+    fileNames, classNames, names, fields
+  }
 
   if (type === 'validatorCreate') {
-    props.className = classNames.validatorCreate;
+    props.className = classNames.validatorCreate
   }
 
   if (type === 'validatorUpdate') {
-    props.className = classNames.validatorUpdate;
+    props.className = classNames.validatorUpdate
   }
 
   if (toolbox.filesystem.exists(target)) {
-    toolbox.print.error(`O arquivo ${filename} já existe`);
-    return;
+    toolbox.print.error(`O arquivo ${filename} já existe`)
+    return
   }
 
-  return toolbox.template.generate({ template, target, props });
-};
+  return toolbox.template.generate({ template, target, props })
+}
 
 module.exports = {
-  generate,
-};
+  generate
+}

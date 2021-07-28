@@ -2,8 +2,8 @@
 // to your commands
 module.exports = (toolbox) => {
   toolbox.foo = () => {
-    toolbox.print.info('called foo extension');
-  };
+    toolbox.print.info('called foo extension')
+  }
 
   // enable this if you want to read configuration in from
   // the current folder's package.json (in a "hcli" property),
@@ -12,4 +12,4 @@ module.exports = (toolbox) => {
   //   ...toolbox.config,
   //   ...toolbox.config.loadConfig(process.cwd(), "hcli")
   // }
-};
+}

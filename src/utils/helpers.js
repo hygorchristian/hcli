@@ -1,39 +1,39 @@
-const fs = require('fs');
+const fs = require('fs')
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
+function capitalizeFirstLetter (string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-function snakeUpperCase(string) {
-  return string.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toUpperCase();
+function snakeUpperCase (string) {
+  return string.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toUpperCase()
 }
 
-function snakeLowerCase(string) {
-  return string.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase();
+function snakeLowerCase (string) {
+  return string.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toLowerCase()
 }
 
-function replaceInFile(path, replaces) {
-  const rootDir = process.cwd();
+function replaceInFile (path, replaces) {
+  const rootDir = process.cwd()
 
-  const file = `${rootDir}/${path}`;
-  const data = fs.readFileSync(file, 'utf8');
-  let result = data;
+  const file = `${rootDir}/${path}`
+  const data = fs.readFileSync(file, 'utf8')
+  let result = data
 
   for (let i = 0; i < replaces.length; i++) {
-    const replace = replaces[i];
-    const replacement = `${replace.data}\n${replace.target}`;
+    const replace = replaces[i]
+    const replacement = `${replace.data}\n${replace.target}`
 
     result = result.replace(
       [replace.target],
-      replacement,
-    );
+      replacement
+    )
   }
 
-  fs.writeFileSync(file, result, 'utf8');
+  fs.writeFileSync(file, result, 'utf8')
 }
 
-function fileExists(path) {
-  return fs.existsAsync(path);
+function fileExists (path) {
+  return fs.existsAsync(path)
 }
 
 module.exports = {
@@ -41,5 +41,5 @@ module.exports = {
   snakeUpperCase,
   snakeLowerCase,
   replaceInFile,
-  fileExists,
-};
+  fileExists
+}
