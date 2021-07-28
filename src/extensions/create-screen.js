@@ -10,8 +10,11 @@ module.exports = (toolbox) => {
         target,
         props
       })
+      print.success(`The file ./${filename} was created`)
+      return false // has no errors
     } else {
-      print.error(`O arquivo /${name}/${filename} já existe`)
+      print.error(`The file ./${filename} already exists`)
+      return true
     }
   }
 
@@ -55,11 +58,14 @@ module.exports = (toolbox) => {
       }
     }
 
-    await createRes(res.screen)
-    await createRes(res.style)
-    await createRes(res.index)
+    const e1 = await createRes(res.screen)
+    const e2 = await createRes(res.style)
+    const e3 = await createRes(res.index)
+    const errors = e1 || e2 || e3
 
-    print.success(`The screen ${filename} was created!`)
+    if (!errors) {
+      print.success(`The ${folder.slice(0, -1)} ${filename} was created!`)
+    }
   }
 
   toolbox.createScreen = createComponent
