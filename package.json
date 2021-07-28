@@ -1,8 +1,8 @@
 {
-  "name": "hcli",
+  "name": "hcli-react",
   "version": "1.0.0",
   "description": "Hygor Dias CLI",
-  "private": true,
+  "private": false,
   "bin": {
     "hcli": "bin/hcli"
   },

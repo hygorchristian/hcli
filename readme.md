@@ -1,8 +1,8 @@
-# hcli CLI
+# HCLI
 
-A CLI for hcli.
+A CLI for generate custom react components and screens.
 
-## Customizing your CLI
+## Installing
 
 Check out the documentation at https://github.com/infinitered/gluegun/tree/master/docs.
 
@@ -10,13 +10,21 @@ Check out the documentation at https://github.com/infinitered/gluegun/tree/maste
 
 To package your CLI up for NPM, do this:
 
+Using yarn
+
 ```shell
-$ npm login
-$ npm whoami
-$ npm lint
-$ npm test
-(if typescript, run `npm run build` here)
-$ npm publish
+yarn global add hcli-react
+```
+
+or
+
+```shell
+npm install -g hcli-react
+```
+Then you can see the options with
+
+```shell
+hcli -h
 ```
 
 # License
