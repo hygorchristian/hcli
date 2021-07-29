@@ -1,3 +1,5 @@
+const lodash = require('lodash')
+
 module.exports = (toolbox) => {
   const { filesystem, print, template: _template } = toolbox
 
@@ -31,6 +33,7 @@ module.exports = (toolbox) => {
 
     const arr = name.split('/')
     const filename = arr[arr.length - 1]
+    const camelname = lodash.camelCase(filename)
 
     const type = await isReactNative() ? 'native' : 'web'
 
@@ -40,7 +43,7 @@ module.exports = (toolbox) => {
         filename: `src/${folder}/${name}/${filename}.${lang}x`,
         template: `${type}/screen.${lang}.ejs`,
         target: `src/${folder}/${name}/${filename}.${lang}x`,
-        props: { filename }
+        props: { filename, camelname }
       },
       style: {
         name,
@@ -54,7 +57,7 @@ module.exports = (toolbox) => {
         filename: `src/${folder}/${name}/index.${lang}`,
         template: `${type}/screen-index.${lang}.ejs`,
         target: `src/${folder}/${name}/index.${lang}`,
-        props: { filename }
+        props: { filename, camelname }
       }
     }
 
