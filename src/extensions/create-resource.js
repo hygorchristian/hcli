@@ -1,12 +1,14 @@
-const { generate } = require('../utils/resource')
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
+const { generate } = require('../utils/resource');
 
 module.exports = (toolbox) => {
-  const { print } = toolbox
+  const { print } = toolbox;
 
-  async function createResource (name, fields) {
+  async function createResource(name, fields) {
     if (!name) {
-      print.error('O nome deve ser informado.')
-      return
+      print.error('O nome deve ser informado.');
+      return;
     }
 
     const types = [
@@ -18,13 +20,13 @@ module.exports = (toolbox) => {
       'controller',
       'route',
       'docsController',
-      'docsModel'
-    ]
+      'docsModel',
+    ];
 
     for (const type of types) {
-      await generate(type, name, fields, toolbox)
+      await generate(type, name, fields, toolbox);
     }
   }
 
-  toolbox.createResource = createResource
-}
+  toolbox.createResource = createResource;
+};

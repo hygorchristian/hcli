@@ -1,38 +1,41 @@
 module.exports = (toolbox) => {
-  const { filesystem, print, template: _template } = toolbox
+  const {
+    filesystem, print, template: _template, config,
+  } = toolbox;
 
-  async function createRes ({
-    name, filename, template, target, props
+  async function createRes({
+    filename, template, target, props,
   }) {
     if (!filesystem.exists(filename)) {
       await _template.generate({
         template,
         target,
-        props
-      })
-      print.success(`The file ./${filename} was created`)
-      return false
-    } else {
-      print.error(`The file ./${filename} already exists`)
-      return true
+        props,
+      });
+      print.success(`The file ./${filename} was created`);
+      return false;
     }
+    print.error(`The file ./${filename} already exists`);
+    return true;
   }
 
-  async function isReactNative () {
-    const pack = await filesystem.read('package.json', 'json')
-    return !!pack.dependencies['react-native']
+  async function isReactNative() {
+    const pack = await filesystem.read('package.json', 'json');
+    return !!pack.dependencies['react-native'];
   }
 
-  async function createComponent (folder, { name, lang }) {
+  async function createComponent(folder, { name }) {
     if (!name) {
-      print.error('The arg name is required: hcli react:component Name')
-      return
+      print.error('The arg name is required: hcli react:component Name');
+      return;
     }
 
-    const arr = name.split('/')
-    const filename = arr[arr.length - 1]
+    const arr = name.split('/');
+    const filename = arr[arr.length - 1];
 
-    const type = await isReactNative() ? 'native' : 'web'
+    const type = await isReactNative() ? 'native' : 'web';
+
+    const { lang } = config;
 
     const res = {
       screen: {
@@ -40,33 +43,33 @@ module.exports = (toolbox) => {
         filename: `src/${folder}/${name}/index.${lang}`,
         template: `${type}/component.${lang}.ejs`,
         target: `src/${folder}/${name}/${filename}.${lang}x`,
-        props: { filename }
+        props: { filename },
       },
       style: {
         name,
         filename: `src/${folder}/${name}/styles.${lang}`,
         template: `${type}/style.${lang}.ejs`,
         target: `src/${folder}/${name}/styles.${lang}`,
-        props: {}
+        props: {},
       },
       index: {
         name,
         filename: `src/${folder}/${name}/index.${lang}`,
         template: `${type}/screen-index.${lang}.ejs`,
         target: `src/${folder}/${name}/index.${lang}`,
-        props: { filename }
-      }
-    }
+        props: { filename },
+      },
+    };
 
-    const e1 = await createRes(res.screen)
-    const e2 = await createRes(res.style)
-    const e3 = await createRes(res.index)
-    const errors = e1 || e2 || e3
+    const e1 = await createRes(res.screen);
+    const e2 = await createRes(res.style);
+    const e3 = await createRes(res.index);
+    const errors = e1 || e2 || e3;
 
     if (!errors) {
-      print.success(`The ${folder.slice(0, -1)} ${filename} was created!`)
+      print.success(`The ${folder.slice(0, -1)} ${filename} was created!`);
     }
   }
 
-  toolbox.createComponent = createComponent
-}
+  toolbox.createComponent = createComponent;
+};
